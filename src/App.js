@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
-import {ThemeProvider, Footer, Layout} from '@allenai/varnish';
+import {ThemeProvider, Footer, Header, Layout} from '@allenai/varnish';
 // import {ThemeProvider, Header, Layout} from 'antd';
-// import Header from 'antd'
 // import {Layout as AntLayout} from 'antd';
 import Menu from './components/Menu';
 import ModelIntro from './components/ModelIntro';
@@ -18,6 +17,7 @@ import '@allenai/varnish/dist/varnish.css';
 // import '~antd/dist/antd.css';
 
 const {Content, DefaultAppLayoutProvider} = Layout;
+const { HeaderColumns, HeaderTitle } = Header;
 // const {HeaderColumns} = Header;
 // const {Header} = AntLayout
 
@@ -44,6 +44,11 @@ const Demo = (props) => {
     const redirectedModel = modelRedirects[model] || model
     return (
         <Layout bgcolor="white">
+            <Header id="myheader">
+                <HeaderColumns>
+                    <HeaderTitle>Natural CC</HeaderTitle>
+                </HeaderColumns>
+            </Header>
             <Layout>
                 <Menu redirectedModel={redirectedModel}/>
                 <Layout>
@@ -52,6 +57,9 @@ const Demo = (props) => {
                     </FullSizeContent>
                 </Layout>
             </Layout>
+            <Footer>
+                Natural CC Footer
+            </Footer>
         </Layout>
     );
 }

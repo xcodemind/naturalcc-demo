@@ -24,7 +24,7 @@ const fields = [
     {
         name: 'utterance',
         label: 'Utterance',
-        type: 'TEXT_INPUT',
+        type: 'TEXT_AREA',
         placeholder: `E.g. "show me the flights from detroit to westchester county"`,
     },
 ];
@@ -66,7 +66,7 @@ const examples = [
         utterance: 'Assign the value to the given attribute of the item',
     },
     {
-        utterance: 'Validate the requested filter query strings. If all filters are valid\\n then return them as {Hash hashes}, otherwise halt 400 Bad Request and\\n return JSON error response.',
+        utterance: 'Validate the requested filter query strings. If all filters are valid\n then return them as {Hash hashes}, otherwise halt 400 Bad Request and\n return JSON error response.',
     },
 ];
 

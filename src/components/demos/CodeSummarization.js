@@ -86,7 +86,7 @@ const taskModels = [
 
 const fields = [
     {
-        name: "code", label: "Code", type: "TEXT_INPUT",
+        name: "code", label: "Code", type: "TEXT_AREA",
         placeholder: `E.g. "def addition(a, b):\\n\\treturn a+b"`
     },
     {name: "model", label: "Model", type: "RADIO", options: taskModels, optional: true}
