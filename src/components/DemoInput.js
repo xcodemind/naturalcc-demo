@@ -65,7 +65,7 @@ class DemoInput extends React.Component {
     constructor(props) {
         super(props)
 
-        const { examples, fields, inputState, runModel } = props
+        const { examples, fields, inputState, runModel, indicateWord } = props
         if (!Array.isArray(examples[0])) {
           // TODO(mattg,jonb): Change this type to be [{"default": examples}]. Doing this requires
           // updating all of the other demos, and is probably best done by adding some kind of
@@ -125,10 +125,20 @@ class DemoInput extends React.Component {
 
         // Handler that runs the model if 'Enter' is pressed.
         this.runOnEnter = e => {
-            if (e.key === 'Enter') {
+            // if (e.key === 'Enter') {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //     runModel(this.cleanInputs())
+            // }
+        }
+
+        // Handler that indicates the next word if 'Tab' is pressed.
+        this.runOnTab = e => {
+            if(e.key === 'Tab'){
                 e.preventDefault();
                 e.stopPropagation();
-                runModel(this.cleanInputs())
+                // Here runs the indication function
+                indicateWord();
             }
         }
 

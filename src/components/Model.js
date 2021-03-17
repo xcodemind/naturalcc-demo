@@ -26,6 +26,10 @@ class Model extends React.Component {
       this.runModel = this.runModel.bind(this)
     }
 
+    indicateWord(inputs){
+
+    }
+
     runModel(inputs, disablePermadata = false) {
       const { selectedModel, apiUrl } = this.props
 
@@ -91,6 +95,7 @@ class Model extends React.Component {
                                      responseData={responseData}
                                      outputState={outputState}
                                      runModel={this.runModel}
+                                     indicateWord = {this.indicateWord.bind(this)}
                                      exampleLabel={exampleLabel}/>
 
         const outputProps = {...this.state, requestData, responseData}
