@@ -21,7 +21,7 @@ const { HeaderColumns, HeaderTitle } = Header;
 // const {HeaderColumns} = Header;
 // const {Header} = AntLayout
 
-const DEFAULT_PATH = "/code-prediction"
+const DEFAULT_PATH = "/code-summarization"
 
 const App = () => (
     <ThemeProvider>
@@ -44,9 +44,9 @@ const Demo = (props) => {
     const redirectedModel = modelRedirects[model] || model
     return (
         <Layout bgcolor="white">
-            <Header id="myheader">
-                <HeaderColumns>
-                    <HeaderTitle>Natural CC</HeaderTitle>
+            <Header style={{paddingLeft:"0",paddingRight:"0"}} id="myheader">
+                <HeaderColumns style={{background:"#072f67"}}>
+                    <HeaderTitle style={{color:"white",paddingLeft:"2rem"}}>Natural CC</HeaderTitle>
                 </HeaderColumns>
             </Header>
             <Layout>
@@ -57,9 +57,6 @@ const Demo = (props) => {
                     </FullSizeContent>
                 </Layout>
             </Layout>
-            <Footer>
-                Natural CC Footer
-            </Footer>
         </Layout>
     );
 }

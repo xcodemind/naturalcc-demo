@@ -8,6 +8,7 @@ import { ImageParamControl, blobToString } from './ImageParamControl';
 import { Tooltip } from './Shared'
 import '../css/Button.css'
 import { FormField, FormLabel, FormInput, FormTextArea, FormSelect } from './Form';
+import CodeDemo from './CodeDisplay'
 
 const PATTERN_NON_WORD_CHAR = /\W/;
 const PATTERN_WORD_CHAR = /\w/;
@@ -81,7 +82,8 @@ class DemoInput extends React.Component {
         // What happens when you change the example dropdown
         this.handleExampleChange = eVal => {
             if (eVal !== "-1") {
-                const { groupIndex, exampleIndex } = decodeExampleName(eVal)
+                console.log(eVal)
+                const { groupIndex, exampleIndex } = decodeExampleName(eVal.target.value)
                 const example = this.normalizedExamples[groupIndex][1][exampleIndex]
                 // Because the field names vary by model, we need to be indirect.
                 let stateUpdate = {}
@@ -132,16 +134,6 @@ class DemoInput extends React.Component {
             // }
         }
 
-        // Handler that indicates the next word if 'Tab' is pressed.
-        this.runOnTab = e => {
-            if(e.key === 'Tab'){
-                e.preventDefault();
-                e.stopPropagation();
-                // Here runs the indication function
-                indicateWord();
-            }
-        }
-
         // Some of the inputs (e.g. interactive beam search)
         // depend on the previous outputs, so when we do a new run
         // we need to clear them out.
@@ -153,6 +145,12 @@ class DemoInput extends React.Component {
                     delete inputs[name]
                 })
             })
+            if(!inputs.code){
+                inputs.code = "def mail_managers(subject, message, fail_silently=False, connection=None):\n\tif (not settings.MANAGERS):\n\t\treturn\n\tEmailMessage((u'%s%s' % (settings.EMAIL_SUBJECT_PREFIX, subject)), message, settings.SERVER_EMAIL, [a[1] for a in settings.MANAGERS], connection=connection).send(fail_silently=fail_silently)\n"
+            }
+            if(!inputs.utterance){
+                inputs.utterance = "Create a missing file if the path is valid."
+            }
 
             return inputs
         }
@@ -195,7 +193,7 @@ class DemoInput extends React.Component {
                         />
                     )
                     break
-
+                
                 case "TEXT_AREA":
                 case "TEXT_INPUT":
                     // Both text area and input have the exact same properties.
@@ -213,7 +211,7 @@ class DemoInput extends React.Component {
                         rows:5,
                     }
 
-                    input = field.type === "TEXT_AREA" ? <FormTextArea {...props}/> : <FormInput {...props}/>
+                    input = field.type === "TEXT_AREA" ? <CodeDemo {...props} /> : <FormInput {...props}/>
                     break
 
                 case "SELECT":
@@ -287,23 +285,21 @@ class DemoInput extends React.Component {
         return (
             <React.Fragment>
                 <FormInstructions>
-                    <span>{exampleLabel ? exampleLabel : 'Enter text or'}</span>
-                    <Select
-                        dropdownMatchSelectWidth = {false}
+                    <span>{exampleLabel ? exampleLabel : ''}</span>
+                    <Radio.Group
                         disabled={outputState === "working"}
                         onChange={this.handleExampleChange}
-                        defaultValue="-1">
-                        <Select.Option value="-1">Choose an example...</Select.Option>
+                        defaultValue="0@@0">
                         {this.normalizedExamples.map((exampleInfo, groupIndex) => {
-                            return SelectOptionGroup(exampleInfo, groupIndex, fields)
+                            return RadioOptionGroup(exampleInfo, groupIndex, fields)
                         })}
-                    </Select>
+                    </Radio.Group>
                 </FormInstructions>
                 {inputs}
                 <RunButtonArea>
                     <Button
                       type="primary"
-                      disabled={!canRun || outputState === "working"}
+                      disabled={ outputState === "working"}
                       onClick={ () => this.props.runModel(this.cleanInputs()) }>Run
                         <RightOutlined />
                     </Button>
@@ -344,6 +340,20 @@ const RunButtonArea = styled.div`
   }
 `;
 
+function RadioOptionGroup(exampleInfo, groupIndex, fields) {
+    const exampleType = exampleInfo[0]
+    const examples = exampleInfo[1]
+    if (!exampleType || exampleType === DEFAULT_OPTION_GROUP) {
+        return RenderOptions(examples, groupIndex, fields)
+    } else {
+        return (
+            <Radio label={exampleType} key={groupIndex}>
+                {RenderOptions(examples, groupIndex, fields)}
+            </Radio>
+        )
+    }
+}
+
 function SelectOptionGroup(exampleInfo, groupIndex, fields) {
   const exampleType = exampleInfo[0]
   const examples = exampleInfo[1]
@@ -362,7 +372,8 @@ function RenderOptions(examples, groupIndex, fields) {
     return examples.map((example, exampleIndex) => {
         const encodedName = encodeExampleName(groupIndex, exampleIndex)
         return (
-            <Select.Option value={encodedName} key={encodedName}>{makeSnippet(example, fields)}</Select.Option>
+            <Radio value={encodedName} key={encodedName}>eg.{example.order}</Radio>
+            // <Select.Option value={encodedName} key={encodedName}>{makeSnippet(example, fields)}</Select.Option>
         )
     })
 }

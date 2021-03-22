@@ -6,6 +6,7 @@ import { Collapse } from 'antd';
 import HeatMap from '../HeatMap';
 import Model from '../Model';
 import OutputField from '../OutputField';
+import CodeDisplay from '../CodeDisplay'
 import SyntaxHighlight from '../highlight/SyntaxHighlight.js';
 
 const title = 'Code Retrieval';
@@ -25,7 +26,7 @@ const fields = [
         name: 'utterance',
         label: 'Utterance',
         type: 'TEXT_AREA',
-        placeholder: `E.g. "show me the flights from detroit to westchester county"`,
+        placeholder: `Create a missing file if the path is valid.`,
     },
 ];
 
@@ -47,7 +48,8 @@ const Output = ({ responseData }) => {
     return (
         <div className="model__content answer">
             <OutputField label="Retrieved Code" suppressSummary>
-                {code_snippet}
+                <CodeDisplay value={predicted_sql_query} /> 
+                {/* {code_snippet} */}
             </OutputField>
             {internals}
         </div>
@@ -60,12 +62,15 @@ const PanelDesc = styled.div`
 
 const examples = [
     {
+        order:1,
         utterance: "Create a missing file if the path is valid.",
     },
     {
+        order:2,
         utterance: 'Assign the value to the given attribute of the item',
     },
     {
+        order:3,
         utterance: 'Validate the requested filter query strings. If all filters are valid\n then return them as {Hash hashes}, otherwise halt 400 Bad Request and\n return JSON error response.',
     },
 ];

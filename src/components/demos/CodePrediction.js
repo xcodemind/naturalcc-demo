@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
 import {Collapse} from '@allenai/varnish';
+import {message} from 'antd';
 
 import OutputField from '../OutputField'
 import SaliencyMaps from '../Saliency'
@@ -248,6 +249,20 @@ class App extends React.Component {
         }
     }
 
+    // Handler that indicates the next word if 'Tab' is pressed.
+    runOnTab = e => {
+        if(e.key === 'Tab'){
+            e.preventDefault();
+            e.stopPropagation();
+            // Here runs the indication function
+            if(this.state.top_tokens){
+                this.choose(this.state.top_tokens[0]);
+            }else{
+                message.error("Sorry, it can't predict now.")
+            }
+        }
+    }
+
     choose(choice = undefined, doNotChangeUrl) {
         // strip trailing spaces
         const textAreaText = this.state.output;
@@ -282,7 +297,6 @@ class App extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 if (this.currentRequestId === currentReqId) {
                     // If the user entered text by typing don't overwrite it, as that feels
                     // weird. If they clicked it overwrite it
@@ -332,6 +346,7 @@ class App extends React.Component {
                             <TextInput type="text"
                                        autoSize={{minRows: 5, maxRows: 10}}
                                        value={this.state.output}
+                                       onKeyDown={this.runOnTab}
                                        onChange={this.setOutput}/>
                             {this.state.loading ? (
                                 <Loading>
@@ -351,6 +366,7 @@ class App extends React.Component {
                             <Choices output={this.state.output}
                                      index={0}
                                      choose={this.choose}
+                                     runOnTab={this.runOnTab}
                                      logits={this.state.logits}
                                      top_tokens={this.state.top_tokens}
                                      probabilities={this.state.probabilities}
@@ -370,19 +386,12 @@ const formatProbability = (probs, idx) => {
     var sum = probs.reduce(function (a, b) {
         return a + b;
     }, 0);
-    console.log('probs: ', probs);
-    console.log("probs[idx]: ", probs[idx]);
-    console.log("sum: ", sum);
     var prob = probs[idx] / sum
-    console.log('prob: ', prob);
     prob = prob * 100
     return `${prob.toFixed(1)}%`
 }
 
-const Choices = ({output, index, logits, top_tokens, choose, probabilities}) => {
-    console.log("output: ", output);
-    console.log("top_tokens: ", top_tokens);
-    console.log("probabilities: ", probabilities);
+const Choices = ({output, index, logits, top_tokens, choose, probabilities, runOnTab}) => {
     if (!top_tokens) {
         return null
     }
@@ -395,7 +404,6 @@ const Choices = ({output, index, logits, top_tokens, choose, probabilities}) => 
 
     const lis = top_tokens.map((word, idx) => {
         const prob = formatProbability(probabilities, idx)
-        console.log("word: ", word);
         // get rid of CRs
         // const cleanWord = word.join('').replace(' ,', ',').replace(/\n/g, "↵")
         //     .replace(/Ġ/g, " ").replace(/Ċ/g, "↵")
@@ -404,7 +412,8 @@ const Choices = ({output, index, logits, top_tokens, choose, probabilities}) => 
         const displaySeq = word
         return (
             <ListItem key={`${idx}-${word}`}>
-                <ChoiceItem onClick={() => choose(word)}>
+                <ChoiceItem  
+                    onClick={() => choose(word)}>
                     <Probability>{prob}</Probability>
                     {' '}
                     <Token>{displaySeq}</Token>

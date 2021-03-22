@@ -18,19 +18,19 @@ import MaskedLM from './components/demos/MaskedLM'
 const modelGroups = [
     // NCC examples
     {
-        label: "Code Completion",
-        iconSrc: addIcon,
-        defaultOpen: true,
-        models: [
-            {model: "code-prediction", name: "Programming Language Modeling", component: CodePrediction},
-        ]
-    },
-    {
         label: "Code Docummendation",
         iconSrc: annotateIcon,
         defaultOpen: true,
         models: [
             {model: "code-summarization", name: "Code Comment Generation", component: CodeSummarization},
+        ]
+    },
+    {
+        label: "Code Completion",
+        iconSrc: addIcon,
+        defaultOpen: true,
+        models: [
+            {model: "code-prediction", name: "Programming Language Modeling", component: CodePrediction},
         ]
     },
     {

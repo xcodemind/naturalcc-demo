@@ -126,7 +126,9 @@ class Model extends React.Component {
                     {subModel ?
                       <FormField>
                         <FormLabel>Model</FormLabel>
-                        <FormSelect value={this.state.selectedSubModel || subModel.options[0].modelId}
+                        <FormSelect 
+                          style={{ width: 390 }}
+                          value={this.state.selectedSubModel || subModel.options[0].modelId}
                           onChange={this.handleSubModelChange}
                           dropdownMatchSelectWidth = {false}
                           disabled={outputState === "working"}

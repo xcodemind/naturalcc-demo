@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom';
 import {Collapse} from '@allenai/varnish';
 
 import HeatMap from '../HeatMap'
+import CodeDisplay from '../CodeDisplay'
 import Model from '../Model'
 import OutputField from '../OutputField'
 import SyntaxHighlight from '../highlight/SyntaxHighlight.js';
@@ -87,7 +88,10 @@ const taskModels = [
 const fields = [
     {
         name: "code", label: "Code", type: "TEXT_AREA",
-        placeholder: `E.g. "def addition(a, b):\\n\\treturn a+b"`
+        placeholder: `def mail_managers(subject, message, fail_silently=False, connection=None):
+        if (not settings.MANAGERS):
+            return
+        EmailMessage((u'%s%s' % (settings.EMAIL_SUBJECT_PREFIX, subject)), message, settings.SERVER_EMAIL, [a[1] for a in settings.MANAGERS], connection=connection).send(fail_silently=fail_silently)`
     },
     {name: "model", label: "Model", type: "RADIO", options: taskModels, optional: true}
 ]
@@ -111,7 +115,8 @@ const Output = ({responseData}) => {
     return (
         <div className="model__content answer">
             <OutputField label="Generated Code Comment" suppressSummary>
-                {code_summary}
+                {/* {code_summary} */}
+                <CodeDisplay value={predicted_summary} />
             </OutputField>
             {internals}
         </div>
@@ -124,12 +129,15 @@ const PanelDesc = styled.div`
 
 const examples = [
     {
+        order:1,
         code: "def mail_managers(subject, message, fail_silently=False, connection=None):\n\tif (not settings.MANAGERS):\n\t\treturn\n\tEmailMessage((u'%s%s' % (settings.EMAIL_SUBJECT_PREFIX, subject)), message, settings.SERVER_EMAIL, [a[1] for a in settings.MANAGERS], connection=connection).send(fail_silently=fail_silently)\n",
     },
     {
+        order:2,
         code: "def getCarveIntersectionFromEdge(edge, vertexes, z):\n\tfirstVertex = vertexes[edge.vertexIndexes[0]]\n\tfirstVertexComplex = firstVertex.dropAxis(2)\n\tsecondVertex = vertexes[edge.v      ertexIndexes[1]]\n\tsecondVertexComplex = secondVertex.dropAxis(2)\n\tzMinusFirst = (z - firstVertex.z)\n\tup = (secondVertex.z - firstVertex.z)\n\treturn (((zMinusFirst * (secondVerte      xComplex - firstVertexComplex)) \/ up) + firstVertexComplex)\n",
     },
     {
+        order:3,
         code: "def compare_package(version1, version2):\n\tdef normalize(v):\n\t\treturn [int(x) for x in re.sub('(\\\\.0+)*$', '', v).split('.')]\n\treturn cmp(normalize(version1), normalize(version2))\n",
     },
 ];
