@@ -4,6 +4,7 @@ import { Button, Select, Radio } from '@allenai/varnish'
 import RightOutlined from '@ant-design/icons/RightOutlined';
 
 import BeamSearch from './BeamSearch'
+import ParaBlock from './ParaBlock'
 import { ImageParamControl, blobToString } from './ImageParamControl';
 import { Tooltip } from './Shared'
 import '../css/Button.css'
@@ -193,8 +194,13 @@ class DemoInput extends React.Component {
                         />
                     )
                     break
-                
                 case "TEXT_AREA":
+                    input = <ParaBlock 
+                                placeholder={field.placeholder || ""}
+                                value={this.state[field.name]} />
+                    break
+
+                case "CODE_DISPLAY":
                 case "TEXT_INPUT":
                     // Both text area and input have the exact same properties.
                     const props = {
@@ -208,10 +214,10 @@ class DemoInput extends React.Component {
                         value: this.state[field.name],
                         disabled: outputState === "working",
                         maxLength: field.maxLength || (field.type === "TEXT_INPUT" ? 1000 : 100000),
-                        rows:5,
+                        rows:6,
                     }
 
-                    input = field.type === "TEXT_AREA" ? <CodeDemo {...props} /> : <FormInput {...props}/>
+                    input = field.type === "CODE_DISPLAY" ? <CodeDemo {...props} /> : <CodeDemo {...props} text={true}/>
                     break
 
                 case "SELECT":
@@ -372,7 +378,7 @@ function RenderOptions(examples, groupIndex, fields) {
     return examples.map((example, exampleIndex) => {
         const encodedName = encodeExampleName(groupIndex, exampleIndex)
         return (
-            <Radio value={encodedName} key={encodedName}>eg.{example.order}</Radio>
+            <Radio value={encodedName} key={encodedName}>case {example.order}</Radio>
             // <Select.Option value={encodedName} key={encodedName}>{makeSnippet(example, fields)}</Select.Option>
         )
     })

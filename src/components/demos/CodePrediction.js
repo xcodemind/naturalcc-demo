@@ -3,12 +3,13 @@ import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
 import {Collapse} from '@allenai/varnish';
+import { Tabs, Select, Typography } from '@allenai/varnish';
 import {message} from 'antd';
 
 import OutputField from '../OutputField'
 import SaliencyMaps from '../Saliency'
 import HotflipComponent, {HotflipPanel} from '../Hotflip'
-import {FormField, FormLabel, FormTextArea} from '../Form';
+import {FormField, FormLabel, FormTextArea, FormSelect} from '../Form';
 
 // const apiUrl = () => `http://149.28.205.231:5002/api/code_prediction/predict`
 
@@ -131,6 +132,34 @@ const Token = styled.span`
   font-weight: 600;
 `
 
+const taskModels = [
+    {
+        name: "transformer",
+        desc: <span>
+      Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
+             employs self-attention for neural machine translation task .
+      </span>,
+        modelId: "transformer",
+        // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
+    },
+    {
+        name: "Seq2Seq",
+        desc: <span>
+      This model is the baseline model described
+      in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
+      It uses a RNN based encoder as well as a RNN based encoder for text generation task.
+      </span>,
+        modelId: "seq2seq",
+        // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
+    },
+
+]
+
+const OptDesc = styled.div`
+  max-width: ${({theme}) => theme.breakpoints.md};
+  white-space: break-spaces;
+`;
+
 const DEFAULT = "body_content = self._serialize.body(parameters, 'ServicePrincipalCreateParameters')\nrequest = self._client.post(url, query_parameters)\nresponse = self._client.send( ";
 
 function addToUrl(output, choice) {
@@ -182,7 +211,8 @@ class App extends React.Component {
             error: false,
             model: DEFAULT_MODEL,
             interpretData: null,
-            attackData: null
+            attackData: null,
+            selectedSubModel: "transformer"
         }
 
         this.choose = this.choose.bind(this)
@@ -229,6 +259,10 @@ class App extends React.Component {
         this.currentRequestId = nextReqId;
         return nextReqId;
     }
+
+    handleSubModelChange = (val) => {
+        this.setState({selectedSubModel: val});
+      }
 
     componentDidMount() {
         this.choose()
@@ -279,6 +313,7 @@ class App extends React.Component {
         const sentence = choice === undefined ? textAreaText : textAreaText + cleanedChoice
         const payload = {
             sentence: sentence,
+            model:this.state.selectedSubModel
         }
 
         const currentReqId = this.createRequestId();
@@ -340,6 +375,26 @@ class App extends React.Component {
                 <ModelArea className="model__content answer">
                     <h2><span>{title}</span></h2>
                     <span>{description}</span>
+                    <FormLabel>Model</FormLabel>
+                    <FormSelect
+                        style={{width:390}}
+                        value={this.state.selectedSubModel || taskModels[0].modelId}
+                        onChange={this.handleSubModelChange}
+                        dropdownMatchSelectWidth = {false}
+                        optionLabelProp="label"
+                        listHeight={370}
+                        >
+                        {
+                            taskModels.map((value,i) => (
+                              <Select.Option key={value.modelId} value={value.modelId} label={value.name}>
+                                <>
+                                  <Typography.BodyBold>{value.name}</Typography.BodyBold>
+                                  <OptDesc>{value.desc}</OptDesc>
+                                </>
+                              </Select.Option>
+                            ))
+                          }                      
+                    </FormSelect>
                     <InputOutput>
                         <InputOutputColumn>
                             <FormLabel>Sentence:</FormLabel>
@@ -446,6 +501,8 @@ const Choices = ({output, index, logits, top_tokens, choose, probabilities, runO
     )
 }
 
-const modelProps = {}
+const modelProps = {
+    options: taskModels,
+}
 
 export default withRouter(props => <App {...props} {...modelProps}/>)

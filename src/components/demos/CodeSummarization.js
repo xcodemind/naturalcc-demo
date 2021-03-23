@@ -4,10 +4,11 @@ import {withRouter} from 'react-router-dom';
 import {Collapse} from '@allenai/varnish';
 
 import HeatMap from '../HeatMap'
-import CodeDisplay from '../CodeDisplay'
+import CodeDemo from '../CodeDisplay'
 import Model from '../Model'
 import OutputField from '../OutputField'
 import SyntaxHighlight from '../highlight/SyntaxHighlight.js';
+import ParaBlock from '../ParaBlock';
 
 const title = "Code Summarization";
 
@@ -62,6 +63,7 @@ const defaultUsage = undefined;
 // }
 
 // models
+// Add your models here
 const taskModels = [
     {
         name: "transformer",
@@ -72,22 +74,22 @@ const taskModels = [
         modelId: "code-summarization-transformer",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
-    // {
-    //     name: "Seq2Seq",
-    //     desc: <span>
-    //   This model is the baseline model described
-    //   in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
-    //   It uses a RNN based encoder as well as a RNN based encoder for text generation task.
-    //   </span>,
-    //     modelId: "code-summarization-seq2seq",
-    //     // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
-    // },
+    {
+        name: "Seq2Seq",
+        desc: <span>
+      This model is the baseline model described
+      in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
+      It uses a RNN based encoder as well as a RNN based encoder for text generation task.
+      </span>,
+        modelId: "seq2seq",
+        // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
+    },
 
 ]
 
 const fields = [
     {
-        name: "code", label: "Code", type: "TEXT_AREA",
+        name: "code", label: "Code", type: "CODE_DISPLAY",
         placeholder: `def mail_managers(subject, message, fail_silently=False, connection=None):
         if (not settings.MANAGERS):
             return
@@ -116,7 +118,7 @@ const Output = ({responseData}) => {
         <div className="model__content answer">
             <OutputField label="Generated Code Comment" suppressSummary>
                 {/* {code_summary} */}
-                <CodeDisplay value={predicted_summary} />
+                <ParaBlock value={predicted_summary} />
             </OutputField>
             {internals}
         </div>

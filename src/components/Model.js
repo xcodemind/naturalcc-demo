@@ -20,14 +20,10 @@ class Model extends React.Component {
         outputState: responseData ? "received" : "empty", // valid values: "working", "empty", "received", "error"
         requestData: requestData,
         responseData: responseData,
-        selectedSubModel: requestData ? requestData.model : undefined
+        selectedSubModel: requestData ? requestData.model : "transformer"
       };
 
       this.runModel = this.runModel.bind(this)
-    }
-
-    indicateWord(inputs){
-
     }
 
     runModel(inputs, disablePermadata = false) {
@@ -95,7 +91,6 @@ class Model extends React.Component {
                                      responseData={responseData}
                                      outputState={outputState}
                                      runModel={this.runModel}
-                                     indicateWord = {this.indicateWord.bind(this)}
                                      exampleLabel={exampleLabel}/>
 
         const outputProps = {...this.state, requestData, responseData}

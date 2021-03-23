@@ -5,15 +5,9 @@ import 'prismjs/themes/prism.css'
 const Prism = require('prismjs');
 require('prismjs/components/prism-python.js');
 class CodeDemo extends React.Component{
-    constructor(props) {
-        super(props)
-        console.log(props)
-        this.state = {}
-    }
-    componentDidMount(){
-    }
     render() {
-        const {value, placeholder} = this.props
+        const { value, placeholder } = this.props
+        console.log(this.props)
         const code = value?value:placeholder
         let codeHtml = {
             // Prism.highlight(text, grammar, language)

@@ -21,6 +21,29 @@ const description = (
     </span>
 );
 
+const taskModels = [
+    {
+        name: "transformer",
+        desc: <span>
+      Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
+             employs self-attention for neural machine translation task .
+      </span>,
+        modelId: "code-summarization-transformer",
+        // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
+    },
+    {
+        name: "Seq2Seq",
+        desc: <span>
+      This model is the baseline model described
+      in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
+      It uses a RNN based encoder as well as a RNN based encoder for text generation task.
+      </span>,
+        modelId: "seq2seq",
+        // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
+    },
+
+]
+
 const fields = [
     {
         name: 'utterance',
@@ -28,6 +51,7 @@ const fields = [
         type: 'TEXT_AREA',
         placeholder: `Create a missing file if the path is valid.`,
     },
+    {name: "model", label: "Model", type: "RADIO", options: taskModels, optional: true}
 ];
 
 const Output = ({ responseData }) => {
@@ -48,7 +72,7 @@ const Output = ({ responseData }) => {
     return (
         <div className="model__content answer">
             <OutputField label="Retrieved Code" suppressSummary>
-                <CodeDisplay value={predicted_sql_query} /> 
+                <CodeDisplay value={predicted_sql_query}/> 
                 {/* {code_snippet} */}
             </OutputField>
             {internals}
@@ -71,7 +95,7 @@ const examples = [
     },
     {
         order:3,
-        utterance: 'Validate the requested filter query strings. If all filters are valid\n then return them as {Hash hashes}, otherwise halt 400 Bad Request and\n return JSON error response.',
+        utterance: 'Validate the requested filter query strings. If all filters are valid then return them as {Hash hashes}, otherwise halt 400 Bad Request and return JSON error response.',
     },
 ];
 
