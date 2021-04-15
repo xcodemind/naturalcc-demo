@@ -17,12 +17,23 @@ const description = (
     <span>
         <span>
         Generating comments forcode snippets is an effective way for program understandingand facilitate the software development and maintenance.
-            <p>Dataset: <a href="https://github.com/wasiahmad/NeuralCodeSum/blob/master/data/python/get_data.sh">Python(wan)</a></p>
+            <p>Dataset: <a href="https://github.com/wasiahmad/NeuralCodeSum/blob/master/data/python/get_data.sh">Python-doc</a></p>
             <p><i>*Code is running on 2 core cpu. If it is slow, please wait. Thanks!*</i></p>
         </span>
     </span>
 )
 
+const probabilitiesNote = (
+    <span>
+    Note: 
+    <br></br>
+    1. You can print Tab or click the word in the left list to complete the code.
+    <br></br>
+    2. The prediction percentages are normalized across these five sequences. The true probabilities are lower.
+    <br></br>
+    3. Code is running on 2 core cpu. If it is slow, please wait. Thanks!
+    </span>
+)
 
 // TODO: NCC cli
 // const bashCommand = (modelUrl) => {
@@ -66,7 +77,7 @@ const defaultUsage = undefined;
 // Add your models here
 const taskModels = [
     {
-        name: "transformer",
+        name: "Transformer",
         desc: <span>
       Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
              employs self-attention for neural machine translation task .

@@ -134,12 +134,12 @@ const Token = styled.span`
 
 const taskModels = [
     {
-        name: "transformer",
+        name: "Transformer",
         desc: <span>
       Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
              employs self-attention for neural machine translation task .
       </span>,
-        modelId: "transformer",
+        modelId: "Transformer",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
     {
@@ -149,7 +149,7 @@ const taskModels = [
       in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
       It uses a RNN based encoder as well as a RNN based encoder for text generation task.
       </span>,
-        modelId: "seq2seq",
+        modelId: "Seq2seq",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
 
@@ -191,8 +191,14 @@ const description = (
 
 const probabilitiesNote = (
     <span>
-    Note: The prediction percentages are normalized across these five sequences. The true probabilities are lower.
-  </span>
+    Note: 
+    <br></br>
+    1. You can print Tab or click the word in the left list to complete the code.
+    <br></br>
+    2. The prediction percentages are normalized across these five sequences. The true probabilities are lower.
+    <br></br>
+    3. Code is running on 2 core cpu. If it is slow, please wait. Thanks!
+    </span>
 )
 
 
@@ -212,7 +218,7 @@ class App extends React.Component {
             model: DEFAULT_MODEL,
             interpretData: null,
             attackData: null,
-            selectedSubModel: "transformer"
+            selectedSubModel: "Transformer"
         }
 
         this.choose = this.choose.bind(this)
@@ -428,7 +434,7 @@ class App extends React.Component {
                                      hidden={this.state.loading}/>
                         </InputOutputColumn>
                     </InputOutput>
-                    <span>{probabilitiesNote}</span>
+                    <p>{probabilitiesNote}</p>
                 </ModelArea>
             </Wrapper>
         )

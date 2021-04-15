@@ -378,7 +378,7 @@ function RenderOptions(examples, groupIndex, fields) {
     return examples.map((example, exampleIndex) => {
         const encodedName = encodeExampleName(groupIndex, exampleIndex)
         return (
-            <Radio value={encodedName} key={encodedName}>case {example.order}</Radio>
+            <Radio value={encodedName} key={encodedName}>Case {example.order}</Radio>
             // <Select.Option value={encodedName} key={encodedName}>{makeSnippet(example, fields)}</Select.Option>
         )
     })

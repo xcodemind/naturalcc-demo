@@ -22,7 +22,7 @@ const modelGroups = [
         iconSrc: annotateIcon,
         defaultOpen: true,
         models: [
-            {model: "code-summarization", name: "Code Comment Generation", component: CodeSummarization},
+            {model: "code-summarization", name: "Code Summarization", component: CodeSummarization},
         ]
     },
     {

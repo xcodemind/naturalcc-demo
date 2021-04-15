@@ -23,7 +23,7 @@ const description = (
 
 const taskModels = [
     {
-        name: "transformer",
+        name: "Transformer",
         desc: <span>
       Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
              employs self-attention for neural machine translation task .
@@ -47,7 +47,7 @@ const taskModels = [
 const fields = [
     {
         name: 'utterance',
-        label: 'Utterance',
+        label: 'Query',
         type: 'TEXT_AREA',
         placeholder: `Create a missing file if the path is valid.`,
     },

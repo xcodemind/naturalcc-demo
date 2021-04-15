@@ -20,7 +20,7 @@ class Model extends React.Component {
         outputState: responseData ? "received" : "empty", // valid values: "working", "empty", "received", "error"
         requestData: requestData,
         responseData: responseData,
-        selectedSubModel: requestData ? requestData.model : "transformer"
+        selectedSubModel: requestData ? requestData.model : "Transformer"
       };
 
       this.runModel = this.runModel.bind(this)
@@ -141,6 +141,7 @@ class Model extends React.Component {
                           }
                         </FormSelect>
                         <ModelDesc>{subModelDescription}</ModelDesc>
+                        
                       </FormField>
                     : null}
 
@@ -154,6 +155,7 @@ class Model extends React.Component {
                         </Tabs.TabPane>
                       </Tabs>
                     ) : demoInput}
+                    <p>Note: Code is running on 2 core cpu. If it is slow, please wait. Thanks!</p>
                   </div>
                 </PaneTop>
                 <PaneBottom outputState={outputState}>{demoOutput}</PaneBottom>
