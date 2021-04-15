@@ -185,7 +185,7 @@ const description = (
     <span>
     <p>Code completion, which predicts the next code element based on the previously written code, has become an essential tool in many IDEs. It can boost developers’programming productivity. </p>
         <p>Dataset: <a href="https://www.sri.inf.ethz.ch/py150">Py150</a></p>
-        <p><i>*Code is running on 2 core cpu. If it is slow, please wait. Thanks!*</i></p>
+        {/* <p><i>*Code is running on 2 core cpu. If it is slow, please wait. Thanks!*</i></p> */}
     </span>
 )
 

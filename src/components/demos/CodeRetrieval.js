@@ -16,7 +16,7 @@ const description = (
         <span>
             Searching  semantically  similar  codesnippets given a natural language query can provide developersa series of templates for reference for rapid prototyping.
             <p>Dataset: <a href="https://github.com/github/codesearchnet#data">CodeSearchNet(ruby)</a></p>
-            <p><i>*Code is running on 2 core cpu. If it is slow, please wait. Thanks!*</i></p>
+            {/* <p><i>*Code is running on 2 core cpu. If it is slow, please wait. Thanks!*</i></p> */}
         </span>
     </span>
 );
