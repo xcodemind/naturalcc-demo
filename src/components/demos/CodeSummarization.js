@@ -17,7 +17,7 @@ const description = (
     <span>
         <span>
         Generating comments forcode snippets is an effective way for program understandingand facilitate the software development and maintenance.
-            <p>Dataset: <a href="https://github.com/wasiahmad/NeuralCodeSum/blob/master/data/python/get_data.sh">Python-doc</a></p>
+            <p>Dataset: <a href="https://github.com/wasiahmad/NeuralCodeSum/blob/master/data/python/get_data.sh">Python-Doc</a></p>
             {/* <p><i>*Code is running on 2 core cpu. If it is slow, please wait. Thanks!*</i></p> */}
         </span>
     </span>
@@ -31,7 +31,7 @@ const probabilitiesNote = (
     <br></br>
     2. The prediction percentages are normalized across these five sequences. The true probabilities are lower.
     <br></br>
-    3. Code is running on 2 core cpu. If it is slow, please wait. Thanks!
+    3. Code is running on 2 core CPUs. If it is slow, please wait. Thanks!
     </span>
 )
 
@@ -137,7 +137,7 @@ const Output = ({responseData}) => {
     internals = null;
     return (
         <div className="model__content answer">
-            <OutputField label="Generated Code Comment" suppressSummary>
+            <OutputField label="Generated Code Summary" suppressSummary>
                 {/* {code_summary} */}
                 <ParaBlock value={predicted_summary} />
             </OutputField>

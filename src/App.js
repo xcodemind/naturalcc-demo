@@ -49,9 +49,7 @@ const Demo = (props) => {
             <Header style={{paddingLeft:"0",paddingRight:"0"}} id="myheader">
                 <HeaderColumns style={{background:"#072f67"}}>
                     <HeaderTitle style={{color:"white",paddingLeft:"2rem"}}>Natural CC</HeaderTitle>
-                    <div style={styles.acknowledgement}>
-                        <p>Bootstrapped with <a href="https://github.com/allenai/varnish-deprecated" target="_blank">allenai/varnish</a></p>
-                    </div>
+                    
                 </HeaderColumns>
             </Header>
             <Layout>
@@ -62,6 +60,9 @@ const Demo = (props) => {
                             <a style={styles.gitLink} href="https://github.com/xcodemind/naturalcc-demo" target="_blank">Fork on Github</a>
                         </div>
                         <SingleTaskDemo model={redirectedModel} slug={slug}/>
+                        <div style={styles.acknowledgement}>
+                            <i>Bootstrapped with <a href="https://github.com/allenai/varnish-deprecated" target="_blank">allenai/varnish</a></i>
+                        </div>
                     </FullSizeContent>
                 </Layout>
             </Layout>
@@ -86,9 +87,9 @@ const styles = {
     },
     acknowledgement: {
         position: "fixed",
-        top: "1.5rem",
+        bottom: "1.5rem",
         right: "1rem",
-        color: "white"
+        color: "grey"
     }
 }
 

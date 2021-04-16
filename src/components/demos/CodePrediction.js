@@ -206,7 +206,7 @@ const probabilitiesNote = (
     <br></br>
     2. The prediction percentages are normalized across these five sequences. The true probabilities are lower.
     <br></br>
-    3. Code is running on 2 core cpu. If it is slow, please wait. Thanks!
+    3. Code is running on 2 core CPUs. If it is slow, please wait. Thanks!
     </span>
 )
 

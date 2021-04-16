@@ -154,7 +154,7 @@ class Model extends React.Component {
                         </Tabs.TabPane>
                       </Tabs>
                     ) : demoInput}
-                    <p>Note: Code is running on 2 core cpu. If it is slow, please wait. Thanks!</p>
+                    <p>Note: Code is running on 2 core CPUs. If it is slow, please wait. Thanks!</p>
                   </div>
                 </PaneTop>
                 <PaneBottom outputState={outputState}>{demoOutput}</PaneBottom>

@@ -24,6 +24,14 @@ const modelGroups = [
         models: [
             {model: "code-summarization", name: "Code Summarization", component: CodeSummarization},
         ]
+    },    
+    {
+        label: "Code Retrieval",
+        iconSrc: questionIcon,
+        defaultOpen: true,
+        models: [
+            {model: "code-retrieval", name: "Code Retrieval", component: CodeRetrieval},
+        ]
     },
     {
         label: "Code Completion",
@@ -33,14 +41,7 @@ const modelGroups = [
             {model: "code-prediction", name: "Programming Language Modeling", component: CodePrediction},
         ]
     },
-    {
-        label: "Code Retrieval",
-        iconSrc: questionIcon,
-        defaultOpen: true,
-        models: [
-            {model: "code-retrieval", name: "Code Retrieval", component: CodeRetrieval},
-        ]
-    },
+
     // {
     //     label: "Type Inference",
     //     iconSrc: parseIcon,
