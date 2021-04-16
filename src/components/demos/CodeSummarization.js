@@ -82,7 +82,7 @@ const taskModels = [
       Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
              employs self-attention for neural machine translation task .
       </span>,
-        modelId: "code-summarization-transformer",
+        modelId: "Transformer",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
     {
@@ -92,19 +92,29 @@ const taskModels = [
       in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
       It uses a RNN based encoder as well as a RNN based encoder for text generation task.
       </span>,
-        modelId: "seq2seq",
+        modelId: "Seq2seq",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
-
+    {
+        name: "Tree2Seq",
+        desc: <span>
+            This model is the baseline model described
+      in <a href="https://ai.nju.edu.cn/_upload/tpl/04/10/1040/template1040/publications/ijcai17-clone.pdf">Supervised Deep Features for Software Functional
+Clone Detection by Exploiting Lexical and Syntactical Information in Source
+Code.</a>.
+        </span>,
+        modelId: "Tree2Seq"
+    },
 ]
 
 const fields = [
     {
         name: "code", label: "Code", type: "CODE_DISPLAY",
-        placeholder: `def mail_managers(subject, message, fail_silently=False, connection=None):
-        if (not settings.MANAGERS):
-            return
-        EmailMessage((u'%s%s' % (settings.EMAIL_SUBJECT_PREFIX, subject)), message, settings.SERVER_EMAIL, [a[1] for a in settings.MANAGERS], connection=connection).send(fail_silently=fail_silently)`
+        placeholder: `def _organize_states_for_post_update(base_mapper, states, uowtransaction):\n\treturn list(_connections_for_states(base_mapper, uowtransaction, states))`
+    },
+    {
+        name:"groundTruth",label:"Ground Truth", type:"TEXT_AREA",
+        placeholder: 'make an initial pass across a set of states for update corresponding to post_update .'
     },
     {name: "model", label: "Model", type: "RADIO", options: taskModels, optional: true}
 ]
@@ -143,16 +153,56 @@ const PanelDesc = styled.div`
 const examples = [
     {
         order:1,
-        code: "def mail_managers(subject, message, fail_silently=False, connection=None):\n\tif (not settings.MANAGERS):\n\t\treturn\n\tEmailMessage((u'%s%s' % (settings.EMAIL_SUBJECT_PREFIX, subject)), message, settings.SERVER_EMAIL, [a[1] for a in settings.MANAGERS], connection=connection).send(fail_silently=fail_silently)\n",
+        code: "def _organize_states_for_post_update(base_mapper, states, uowtransaction):\n\treturn list(_connections_for_states(base_mapper, uowtransaction, states))\n",
+        groundTruth:"make an initial pass across a set of states for update corresponding to post_update ."
     },
     {
         order:2,
-        code: "def getCarveIntersectionFromEdge(edge, vertexes, z):\n\tfirstVertex = vertexes[edge.vertexIndexes[0]]\n\tfirstVertexComplex = firstVertex.dropAxis(2)\n\tsecondVertex = vertexes[edge.v      ertexIndexes[1]]\n\tsecondVertexComplex = secondVertex.dropAxis(2)\n\tzMinusFirst = (z - firstVertex.z)\n\tup = (secondVertex.z - firstVertex.z)\n\treturn (((zMinusFirst * (secondVerte      xComplex - firstVertexComplex)) \/ up) + firstVertexComplex)\n",
+        code: `def test_outdated_editables_columns_flag(script, data):\n\tscript.pip('install', '-f', data.find_links, '--no-index', 'simple==1.0')\n\tresult = script.pip('install', '-e', 'git+https:\/\/github.com\/pypa\/pip-test-package.git@0.1#egg=pip-test-package')\n\tresult = script.pip('list', '-f', data.find_links, '--no-index', '--editable', '--outdated', '--format=columns')\n\tassert ('Package' in result.stdout)\n\tassert ('Version' in result.stdout)\n\tassert ('Location' in result.stdout)\n\tassert (os.path.join('src', 'pip-test-package') in result.stdout), str(result)`,
+        groundTruth:"test the behavior of --editable --outdated flag in the list command ."
     },
     {
         order:3,
-        code: "def compare_package(version1, version2):\n\tdef normalize(v):\n\t\treturn [int(x) for x in re.sub('(\\\\.0+)*$', '', v).split('.')]\n\treturn cmp(normalize(version1), normalize(version2))\n",
+        code:`def translate_pattern(pattern, anchor=1, prefix=None, is_regex=0):
+        if is_regex:
+            if isinstance(pattern, str):
+                return re.compile(pattern)
+            else:
+                return pattern
+        if pattern:
+            pattern_re = glob_to_re(pattern)
+        else:
+            pattern_re = ''
+        if (prefix is not None):
+            empty_pattern = glob_to_re('')
+            prefix_re = glob_to_re(prefix)[:(- len(empty_pattern))]
+            sep = os.sep
+            if (os.sep == '\\'):
+                sep = '\\\\'
+            pattern_re = ('^' + sep.join((prefix_re, ('.*' + pattern_re))))
+        elif anchor:
+            pattern_re = ('^' + pattern_re)
+        return re.compile(pattern_re)`,
+        groundTruth:"translate a shell-like wildcard pattern to a compiled regular expression ."
     },
+    {
+        order:4,
+        code:`def test_sobel_v_horizontal():
+        (i, j) = np.mgrid[(-5):6, (-5):6]
+        image = (i >= 0).astype(float)
+        result = filters.sobel_v(image)
+        assert_allclose(result, 0)`,
+        groundTruth:"vertical sobel on a horizontal edge should be zero ."
+    },
+    {
+        order:5,
+        code:`def prewitt_h(image, mask=None):
+        assert_nD(image, 2)
+        image = img_as_float(image)
+        result = convolve(image, HPREWITT_WEIGHTS)
+        return _mask_filter_result(result, mask)`,
+        groundTruth:"find the horizontal edges of an image using the prewitt transform ."
+    }
 ];
 
 const apiUrl = () => `/api/summarize`

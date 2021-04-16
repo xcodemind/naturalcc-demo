@@ -14,15 +14,14 @@ class Model extends React.Component {
     constructor(props) {
       super(props);
 
-      const { requestData, responseData} = props;
+      const { requestData, responseData, examples} = props;
 
       this.state = {
         outputState: responseData ? "received" : "empty", // valid values: "working", "empty", "received", "error"
         requestData: requestData,
         responseData: responseData,
-        selectedSubModel: requestData ? requestData.model : "Transformer"
+        selectedSubModel: requestData ? requestData.model : examples.length>=3?"Transformer":"BiRNN"
       };
-
       this.runModel = this.runModel.bind(this)
     }
 

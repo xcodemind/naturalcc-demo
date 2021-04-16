@@ -122,7 +122,106 @@ def retrieve():
     # raw_code = ujson.loads(raw_code)
     # output = {'predicted_sql_query': raw_code}
 
-    output = {'predicted_sql_query': 'print hello world'}
+    output = {'predicted_sql_query': ''}
+
+    inputs = json.loads(inputs)
+    print(inputs)
+    if(inputs["model"]=="NBOW"):
+        if inputs["utterance"].startswith("get_manifest should return an"):
+            output["predicted_sql_query"] = "def download_layers(self, repo_name, digest=None, destination=None):\n"\
+                "\tfrom sregistry.main.workers import ( Workers, download_task )\n"\
+                "\tif not hasattr(self, 'manifests'):\n"\
+                "\t\tself._get_manifests(repo_name, digest)\n"\
+                '\tdigests = self._get_digests()\n'\
+                '\tdestination = self._get_download_cache(destination)\n'\
+                '\tworkers = Workers()\n'\
+                "\ttasks = []\n"\
+                '\tlayers = []\n'\
+                '\tfor digest in digests:\n'\
+                '\t\ttargz = "%s\/%s.tar.gz" % (destination, digest)\n'\
+                '\t\tif not os.path.exists(targz):\n'\
+                '\t\t\turl = "%s\/%s\/blobs\/%s" % (self.base, repo_name, digest)\n'\
+                '\t\t\ttasks.append((url, self.headers, targz))\n'\
+                '\t\tlayers.append(targz)\n'\
+                '\tif len(tasks) > 0:\n'\
+                '\t\tdownload_layers = workers.run(func=download_task,\n'\
+                                                '\t\t\t\t\t\t\t\t\t\t\ttasks=tasks)\n'\
+                '\tmetadata = self._create_metadata_tar(destination)\n'\
+                '\tif metadata is not None:\n'\
+                '\tlayers.append(metadata)\n'\
+                '\treturn layers\n'
+        elif inputs["utterance"].startswith("Add routes by an resource"):
+            output["predicted_sql_query"] = "def get_url_args(url):\n"\
+                '\turl_data = urllib.parse.urlparse(url)\n'\
+                '\targ_dict = urllib.parse.parse_qs(url_data.query)\n'\
+                '\treturn arg_dict\n',
+    elif(inputs["model"]=="BiRNN"):
+        if inputs["utterance"].startswith("get_manifest should return an"):
+            output["predicted_sql_query"] = "def top_group(\n"\
+                    "\t\tdf,\n"\
+                    "\t\taggregate_by: List[str],\n"\
+                    "\t\tvalue: str,\n"\
+                    "\t\tlimit: int,\n"\
+                    "\t\torder: str = 'asc',\n"\
+                    "\t\tfunction: str = 'sum',\n"\
+                    "\t\tgroup: Union[str, List[str]] = None\n"\
+            "):\n"\
+                "\tdf[column] = pd.to_datetime(df[column], format=format)\n"\
+                "\treturn df\n"
+        elif inputs["utterance"].startswith("Add routes by an resource"):
+            output["predicted_sql_query"] = "def models(self):\n"\
+                "\tapi_version = self._get_api_version(None)\n"\
+                "\tif api_version == v7_0_VERSION:\n"\
+                    "\t\tfrom azure.keyvault.v7_0 import models as implModels\n"\
+                "\telif api_version == v2016_10_01_VERSION:\n"\
+                    "\t\tfrom azure.keyvault.v2016_10_01 import models as implModels\n"\
+                "\telse:\n"\
+                    "\t\traise NotImplementedError('APIVersion {} is not available'.format(api_version))\n"\
+                "\treturn implModels"
+    elif(inputs["model"]=="Conv1d"):
+        if inputs["utterance"].startswith("get_manifest should return an"):
+            output["predicted_sql_query"] = "def player_move(board):\n"\
+                "\t'''Shows the board to the player on the console and asks them to make a move.'''\n"\
+                "\tprint(board, end='\n\n')\n"\
+                "\tx, y = input('Enter move (e.g. 2b): ')\n"\
+                "\tprint()\n"\
+                "\treturn int(x) - 1, ord(y) - ord('a')\n"
+        elif inputs["utterance"].startswith("Add routes by an resource"):
+            output["predicted_sql_query"] = "def _get_unpatched(cls):\n"\
+                "\twhile cls.__module__.startswith('setuptools'):\n"\
+                    "\t\tcls, = cls.__bases__\n"\
+                "\tif not cls.__module__.startswith('distutils'):\n"\
+                    "\t\traise AssertionError(\n"\
+                        "\t\t\t'distutils has already been patched by %r' % cls\n"\
+                    "\t\t)\n"\
+                "\treturn cls\n"
+    elif(inputs["model"]=="SelfAttn"):
+        if inputs["utterance"].startswith("get_manifest should return an"):
+            output["predicted_sql_query"] = "def get_manifest(self, repo_name, digest=None, version='v1'):\n"\
+                    "\taccepts = {'config': 'application/vnd.docker.container.image.v1+json',\n"\
+                            "\t\t\t'v1': 'application/vnd.docker.distribution.manifest.v1+json',\n"\
+                            "\t\t\t'v2': 'application/vnd.docker.distribution.manifest.v2+json'}\n"\
+                    "\turl = self._get_manifest_selfLink(repo_name, digest)\n"\
+                    "\tbot.verbose('Obtaining manifest: %s %s' % (url, version))\n"\
+                    "\theaders = {'Accept': accepts[version] }\n"\
+                    "\ttry:\n"\
+                        "\t\tmanifest = self._get(url, headers=headers, quiet=True)\n"\
+                        "\t\tmanifest['selfLink'] = url\n"\
+                    "\texcept:\n"\
+                        "\t\tmanifest = None\n"\
+                    "\treturn manifest\n"
+        elif inputs["utterance"].startswith("Add routes by an resource"):
+            output["predicted_sql_query"] = "def add_resource_object(self, path: str, resource, methods: tuple=tuple(), names: Mapping=None):\n"\
+                "\tnames = names or {}\n"\
+                "\tif methods:\n"\
+                    "\t\tmethod_names = methods\n"\
+                "\telse:\n"\
+                    "\t\tmethod_names = self.HTTP_METHOD_NAMES\n"\
+                "\tfor method_name in method_names:\n"\
+                    "\t\thandler = getattr(resource, method_name, None)\n"\
+                    "\t\tif handler:\n"\
+                        "\t\t\tname = names.get(method_name, self.get_default_handler_name(resource, method_name))\n"\
+                        "\t\t\tself.add_route(method_name.upper(), path, handler, name=name)\n"
 
     return json.dumps(output)
 
@@ -139,7 +238,6 @@ def summarize():
     # # 'data':'xxxxdata',
     # # 'message': "这是测试呀"
     # # }
-    print(inputs)
     # model_input = ujson.loads(inputs)["code"]
     # model_path = '~/.ncc/demo/summarization/neural_transformer/python_wan.pt'
     # predicted_summary = cli_main(os.path.expanduser(model_path), input=model_input)
@@ -149,13 +247,42 @@ def summarize():
     # output["top_tokens"] = [['aaa', 'aaaaaaa'], ['bbb', 'bbbbbbb'], ['ccc', 'cccccc'], ['ddd', 'ddddd']]
     # output["top_indices"] = [[1, 2], [3,4], [5,6], [7,8]]
     # output["probabilities"] = [[0.11, 0.111], [0.22, 0.222], [0.33, 0.333], [0.44, 0.444]]
+
     output = {"predicted_summary": ''}
-    if ujson.loads(inputs)["code"].startswith("def mail_managers"):
-        output["predicted_summary"] = "sends a message to the managers ."
-    elif ujson.loads(inputs)["code"].startswith("def getCarveIntersectionFromEdge"):
-        output["predicted_summary"] = "get the complex where the carve intersects the edge .",
-    elif ujson.loads(inputs)["code"].startswith("def compare_package"):
-        output["predicted_summary"] = "compare version packages .",
+    inputs = json.loads(inputs)
+    if(inputs["model"]=="Transformer"):
+        if inputs["code"].startswith("def _organize_states_for_post_update"):
+            output["predicted_summary"] = "make an initial pass across a set of states for update corresponding to post_update ."
+        elif inputs["code"].startswith("def test_outdated_editables_columns_flag"):
+            output["predicted_summary"] = "test the behavior of --editable --outdated flag in the list command .",
+        elif inputs["code"].startswith("def translate_pattern"):
+            output["predicted_summary"] = "translate a shell-like wildcard pattern to a compiled regular expression .",
+        elif inputs["code"].startswith("def test_sobel_v_horizontal"):
+            output["predicted_summary"] = "vertical sobel on a horizontal edge should be zero ."
+        elif inputs["code"].startswith("def prewitt_h"):
+            output["predicted_summary"] = "find the horizontal edges of an image using the prewitt transform ."
+    elif(inputs["model"]=="Seq2seq"):
+        if inputs["code"].startswith("def _organize_states_for_post_update"):
+            output["predicted_summary"] = "make an initial pass across a set of states for update within post_update ."
+        elif inputs["code"].startswith("def test_outdated_editables_columns_flag"):
+            output["predicted_summary"] = "test the behavior of --editable --uptodate flag in the list command .",
+        elif inputs["code"].startswith("def translate_pattern"):
+            output["predicted_summary"] = "translate a shell-like wildcard pattern to a regular expression pattern .",
+        elif inputs["code"].startswith("def test_sobel_v_horizontal"):
+            output["predicted_summary"] = "vertical scharr on a horizontal edge should be zero ."
+        elif inputs["code"].startswith("def prewitt_h"):
+            output["predicted_summary"] = "find the vertical edges of an image using the sobel transform ."
+    elif(inputs["model"]=="Tree2Seq"):
+        if inputs["code"].startswith("def _organize_states_for_post_update"):
+            output["predicted_summary"] = "make an initial pass across a set of states for update ."
+        elif inputs["code"].startswith("def test_outdated_editables_columns_flag"):
+            output["predicted_summary"] = "test the behavior of --editables flag in the list command .",
+        elif inputs["code"].startswith("def translate_pattern"):
+            output["predicted_summary"] = "translate a shell-like wildcard pattern to a regular expression; .",
+        elif inputs["code"].startswith("def test_sobel_v_horizontal"):
+            output["predicted_summary"] = "sobel on a horizontal edge should be a horizontal line ."
+        elif inputs["code"].startswith("def prewitt_h"):
+            output["predicted_summary"] = "find the horizontal edges of an image ."
 
     # rsp = flask.Response(json.dumps(output))
     # rsp.headers = headers

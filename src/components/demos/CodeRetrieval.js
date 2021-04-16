@@ -23,25 +23,38 @@ const description = (
 
 const taskModels = [
     {
-        name: "Transformer",
-        desc: <span>
-      Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
-             employs self-attention for neural machine translation task .
-      </span>,
-        modelId: "code-summarization-transformer",
+        name: "BiRNN",
+    //     desc: <span>
+    //   Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
+    //          employs self-attention for neural machine translation task .
+    //   </span>,
+        modelId: "BiRNN",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
     {
-        name: "Seq2Seq",
-        desc: <span>
-      This model is the baseline model described
-      in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
-      It uses a RNN based encoder as well as a RNN based encoder for text generation task.
-      </span>,
-        modelId: "seq2seq",
+        name: "NBOW",
+    //     desc: <span>
+    //   This model is the baseline model described
+    //   in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
+    //   It uses a RNN based encoder as well as a RNN based encoder for text generation task.
+    //   </span>,
+        modelId: "NBOW",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
-
+    {
+        name: "Conv1d",
+        modelId:"Conv1d"
+    },
+    {
+        name: "SelfAttn",
+//         desc: <span>
+//             This model is the baseline model described
+//       in <a href="https://ai.nju.edu.cn/_upload/tpl/04/10/1040/template1040/publications/ijcai17-clone.pdf">Supervised Deep Features for Software Functional
+// Clone Detection by Exploiting Lexical and Syntactical Information in Source
+// Code.</a>.
+//         </span>,
+        modelId: "SelfAttn"
+    },
 ]
 
 const fields = [
@@ -49,7 +62,7 @@ const fields = [
         name: 'utterance',
         label: 'Query',
         type: 'TEXT_AREA',
-        placeholder: `Create a missing file if the path is valid.`,
+        placeholder: `get_manifest should return an image manifest for a particular repo and tag.  The image details are extracted when the client is generated. `,
     },
     {name: "model", label: "Model", type: "RADIO", options: taskModels, optional: true}
 ];
@@ -87,15 +100,11 @@ const PanelDesc = styled.div`
 const examples = [
     {
         order:1,
-        utterance: "Create a missing file if the path is valid.",
+        utterance: "get_manifest should return an image manifest for a particular repo and tag. The image details are extracted when the client is generated.",
     },
     {
         order:2,
-        utterance: 'Assign the value to the given attribute of the item',
-    },
-    {
-        order:3,
-        utterance: 'Validate the requested filter query strings. If all filters are valid then return them as {Hash hashes}, otherwise halt 400 Bad Request and return JSON error response.',
+        utterance: `Add routes by an resource instance's methods.`,
     },
 ];
 

@@ -147,10 +147,13 @@ class DemoInput extends React.Component {
                 })
             })
             if(!inputs.code){
-                inputs.code = "def mail_managers(subject, message, fail_silently=False, connection=None):\n\tif (not settings.MANAGERS):\n\t\treturn\n\tEmailMessage((u'%s%s' % (settings.EMAIL_SUBJECT_PREFIX, subject)), message, settings.SERVER_EMAIL, [a[1] for a in settings.MANAGERS], connection=connection).send(fail_silently=fail_silently)\n"
+                inputs.code = `def _organize_states_for_post_update(base_mapper, states, uowtransaction):return list(_connections_for_states(base_mapper, uowtransaction, states))`
             }
             if(!inputs.utterance){
-                inputs.utterance = "Create a missing file if the path is valid."
+                inputs.utterance = "get_manifest should return an image manifest for a particular repo and tag.  The image details are extracted when the client is generated. "
+            }
+            if(!inputs.groundTruth){
+                inputs.groundTruth = "make an initial pass across a set of states for update corresponding to post_update ."
             }
 
             return inputs
