@@ -57,7 +57,7 @@ const Demo = (props) => {
                 <Layout>
                     <FullSizeContent >
                         <div style={styles.gitForkTag}>
-                            <a style={styles.gitLink} href="https://github.com/xcodemind/naturalcc-demo" target="_blank">Fork on Github</a>
+                            <a style={styles.gitLink} href="https://github.com/CGCL-codes/naturalcc-demo" target="_blank">Fork on Github</a>
                         </div>
                         <SingleTaskDemo model={redirectedModel} slug={slug}/>
                         <div style={styles.acknowledgement}>
