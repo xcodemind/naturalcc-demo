@@ -1,42 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
-import {ThemeProvider, Footer, Header, Layout} from '@allenai/varnish';
-// import {ThemeProvider, Header, Layout} from 'antd';
-// import {Layout as AntLayout} from 'antd';
+import { ThemeProvider } from '@allenai/varnish'
+import { Layout} from 'antd';
 import Menu from './components/Menu';
-import ModelIntro from './components/ModelIntro';
 import {ScrollToTopOnPageChange} from './components/ScrollToTopOnPageChange';
 import {modelComponents, modelRedirects} from './models'
-import {PaneTop} from './components/Pane';
 
 import WaitingForPermalink from './components/WaitingForPermalink';
-// import Info from './components/Info';
 
 import './css/App.css';
 import '@allenai/varnish/dist/varnish.css';
-import { color } from '@allenai/varnish/lib/varnish/colors';
-// import '~antd/dist/antd.css';
-
-const {Content, DefaultAppLayoutProvider} = Layout;
-const { HeaderColumns, HeaderTitle } = Header;
+// const { HeaderColumns, HeaderTitle } = Header;
 // const {HeaderColumns} = Header;
-// const {Header} = AntLayout
+const { Header, Sider, Content} = Layout
 
 const DEFAULT_PATH = "/code-summarization"
 
 const App = () => (
     <ThemeProvider>
         <Router>
-            <DefaultAppLayoutProvider layoutVariant="app">
-                <ScrollToTopOnPageChange/>
-                <Switch>
-                    <Route exact path="/" render={() => (
-                        <Redirect to={DEFAULT_PATH}/>
-                    )}/>
-                    <Route path="/:model/:slug?" component={Demo}/>
-                </Switch>
-            </DefaultAppLayoutProvider>
+            <ScrollToTopOnPageChange/>
+            <Switch>
+                <Route exact path="/" render={() => (
+                    <Redirect to={DEFAULT_PATH}/>
+                )}/>
+                <Route path="/:model/:slug?" component={Demo}/>
+            </Switch>
         </Router>
     </ThemeProvider>
 )
@@ -45,25 +35,20 @@ const Demo = (props) => {
     const {model, slug} = props.match.params
     const redirectedModel = modelRedirects[model] || model
     return (
-        <Layout bgcolor="white">
-            <Header style={{paddingLeft:"0",paddingRight:"0"}} id="myheader">
-                <HeaderColumns style={{background:"#072f67"}}>
-                    <HeaderTitle style={{color:"white",paddingLeft:"2rem"}}>Natural CC</HeaderTitle>
-                    
-                </HeaderColumns>
+        <Layout>
+            <Header style={{zIndex:"999"}}>
+                <p style={{color:"white",fontWeight:"bolder", fontSize:"1.5rem"}}>Natural CC</p>
             </Header>
-            <Layout>
+            <Layout theme="light">
                 <Menu redirectedModel={redirectedModel}/>
                 <Layout>
-                    <FullSizeContent >
-                        <div style={styles.gitForkTag}>
-                            <a style={styles.gitLink} href="https://github.com/CGCL-codes/naturalcc-demo" target="_blank">Fork on Github</a>
-                        </div>
-                        <SingleTaskDemo model={redirectedModel} slug={slug}/>
-                        <div style={styles.acknowledgement}>
-                            <i>Bootstrapped with <a href="https://github.com/allenai/varnish-deprecated" target="_blank">allenai/varnish</a></i>
-                        </div>
-                    </FullSizeContent>
+                    <div style={styles.gitForkTag}>
+                        <a style={styles.gitLink} href="https://github.com/CGCL-codes/naturalcc-demo" target="_blank">Fork on Github</a>
+                    </div>
+                    <SingleTaskDemo model={redirectedModel} slug={slug}/>
+                    <div style={styles.acknowledgement}>
+                        <i>Created by <a href="https://ant-design.gitee.io/" target="_blank">ant-design</a></i>
+                    </div> 
                 </Layout>
             </Layout>
         </Layout>
@@ -71,14 +56,14 @@ const Demo = (props) => {
 }
 const styles = {
     gitForkTag: {
-        position: "fixed",
+        position: "absolute",
         top:"0",
         right: "0",
         backgroundColor: "#f9f9f9",
         borderTop: "1px solid #e8e8e8",
         borderBottom:"1px solid #e8e8e8",
         padding: "5px 0px",
-        transform: "rotate(45deg) translateY(54px) translateX(54px)",
+        transform: "rotate(45deg) translateY(58px) translateX(74px)",
         zindex: "1"
       },
     gitLink: {

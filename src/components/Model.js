@@ -176,7 +176,6 @@ export const Wrapper = styled.div`
   background: ${({theme}) => theme.palette.background.light};
   display: block;
   width: 100%;
-  max-width: ${({theme}) => theme.breakpoints.xl};
 `;
 
 export default Model

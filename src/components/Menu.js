@@ -1,12 +1,12 @@
 import React from 'react';
-import { Typography, Menu as VarnishMenu, Layout, Icon } from '@allenai/varnish';
-
+import { Typography, Menu as VarnishMenu, Icon } from '@allenai/varnish';
+import {Layout } from 'antd'
 import { InternalLink } from '../components/InternalLink'
 import { modelGroups } from '../models'
 
 const { BodySmall } = Typography;
 const { IconMenuItemColumns, Item, SubMenu } = VarnishMenu;
-const { LeftSider } = Layout;
+const { Sider } = Layout;
 const { ImgIcon } = Icon;
 
 /*******************************************************************************
@@ -30,7 +30,7 @@ export default class Menu extends React.Component {
 
   render() {
     return (
-      <LeftSider
+      <Sider
         width={this.siderWidthExpanded}
         collapsedWidth={this.siderWidthCollapsed}
         collapsible
@@ -64,7 +64,7 @@ export default class Menu extends React.Component {
               </SubMenu>
             ))}
           </VarnishMenu>
-      </LeftSider>
+      </Sider>
     )
   }
 }

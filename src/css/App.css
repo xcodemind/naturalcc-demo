@@ -37,14 +37,14 @@
   }
 }
 
-.bMvwQZ{
-  display: none !important;
-}
-
-.hGTvOZ {
-  padding: 0 !important;
-}
-
 ::-webkit-scrollbar{
   width:0 !important;
+}
+
+.ant-layout-sider{
+  background: white !important;
+}
+
+.ant-layout-sider-trigger{
+  display: none !important;
 }
