@@ -72,3 +72,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# Lazy Commands
+```shell
+# download nodejs and yarn
+curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm install -g yarn
+cd naturalcc-demo
+source activate py37
+pip install flask
+yarn install # run at 1st run
+# run react 
+yarn start-api
+# if permission error: chmod +x node_modules/.bin/react-scripts
+# run flask
+yarn start
+```
