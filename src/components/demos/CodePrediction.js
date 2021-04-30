@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
 import {Collapse} from '@allenai/varnish';
-import { Tabs, Select, Typography } from '@allenai/varnish';
+import {Tabs, Select, Typography} from '@allenai/varnish';
 import {message} from 'antd';
 
 import OutputField from '../OutputField'
@@ -134,33 +134,27 @@ const Token = styled.span`
 
 const taskModels = [
     {
-        name: "Transformer",
+        name: "GPT2",
+      //   desc: <span>
+      // GPT2, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
+      //        employs self-attention for neural machine translation task .
+      // </span>,
         desc: <span>
-      Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
-             employs self-attention for neural machine translation task .
       </span>,
-        modelId: "Transformer",
+        modelId: "GPT2",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
     {
-        name: "Seq2Seq",
+        name: "SeqRNN",
+      //   desc: <span>
+      // This model is the baseline model described
+      // in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
+      // It uses a RNN based encoder as well as a RNN based encoder for text generation task.
+      // </span>,
         desc: <span>
-      This model is the baseline model described
-      in <a href="https://arxiv.org/pdf/1409.3215.pdf">Sequence to Sequence Learning with Neural Networks</a>.
-      It uses a RNN based encoder as well as a RNN based encoder for text generation task.
       </span>,
-        modelId: "Seq2seq",
+        modelId: "SeqRNN",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
-    },
-    {
-        name: "Tree2Seq",
-        desc: <span>
-            This model is the baseline model described
-      in <a href="https://ai.nju.edu.cn/_upload/tpl/04/10/1040/template1040/publications/ijcai17-clone.pdf">Supervised Deep Features for Software Functional
-Clone Detection by Exploiting Lexical and Syntactical Information in Source
-Code.</a>.
-        </span>,
-        modelId: "Tree2Seq"
     },
 ]
 
@@ -169,7 +163,11 @@ const OptDesc = styled.div`
   white-space: break-spaces;
 `;
 
-const DEFAULT = "body_content = self._serialize.body(parameters, 'ServicePrincipalCreateParameters')\nrequest = self._client.post(url, query_parameters)\nresponse = self._client.send( ";
+// const DEFAULT = "body_content = self._serialize.body(parameters, 'ServicePrincipalCreateParameters')\nrequest = self._client.post(url, query_parameters)\nresponse = self._client.send( ";
+const DEFAULT = "@ register . filter\ndef lookup ( h , key ) :\n\ttry : return h [ key ]\n\t";
+// target: # except KeyError: return ''
+// const DEFAULT = "def upgrade ( ) :\n\top . add_column ( 'column' , sa . Column ( 'nb_max_cards' , sa . Integer ) )\ndef downgrade ( ) :\n\top .";
+// target: # drop_column('column', 'nb_max_cards')
 
 function addToUrl(output, choice) {
     if ('history' in window) {
@@ -227,7 +225,7 @@ class App extends React.Component {
             model: DEFAULT_MODEL,
             interpretData: null,
             attackData: null,
-            selectedSubModel: "Transformer"
+            selectedSubModel: "GPT2"
         }
 
         this.choose = this.choose.bind(this)
@@ -277,7 +275,7 @@ class App extends React.Component {
 
     handleSubModelChange = (val) => {
         this.setState({selectedSubModel: val});
-      }
+    }
 
     componentDidMount() {
         this.choose()
@@ -300,13 +298,13 @@ class App extends React.Component {
 
     // Handler that indicates the next word if 'Tab' is pressed.
     runOnTab = e => {
-        if(e.key === 'Tab'){
+        if (e.key === 'Tab') {
             e.preventDefault();
             e.stopPropagation();
             // Here runs the indication function
-            if(this.state.top_tokens){
+            if (this.state.top_tokens) {
                 this.choose(this.state.top_tokens[0]);
-            }else{
+            } else {
                 message.error("Sorry, it can't predict now.")
             }
         }
@@ -328,7 +326,7 @@ class App extends React.Component {
         const sentence = choice === undefined ? textAreaText : textAreaText + cleanedChoice
         const payload = {
             sentence: sentence,
-            model:this.state.selectedSubModel
+            model: this.state.selectedSubModel
         }
 
         const currentReqId = this.createRequestId();
@@ -392,23 +390,23 @@ class App extends React.Component {
                     <span>{description}</span>
                     <FormLabel>Model</FormLabel>
                     <FormSelect
-                        style={{width:390}}
+                        style={{width: 390}}
                         value={this.state.selectedSubModel || taskModels[0].modelId}
                         onChange={this.handleSubModelChange}
-                        dropdownMatchSelectWidth = {false}
+                        dropdownMatchSelectWidth={false}
                         optionLabelProp="label"
                         listHeight={370}
-                        >
+                    >
                         {
-                            taskModels.map((value,i) => (
-                              <Select.Option key={value.modelId} value={value.modelId} label={value.name}>
-                                <>
-                                  <Typography.BodyBold>{value.name}</Typography.BodyBold>
-                                  <OptDesc>{value.desc}</OptDesc>
-                                </>
-                              </Select.Option>
+                            taskModels.map((value, i) => (
+                                <Select.Option key={value.modelId} value={value.modelId} label={value.name}>
+                                    <>
+                                        <Typography.BodyBold>{value.name}</Typography.BodyBold>
+                                        <OptDesc>{value.desc}</OptDesc>
+                                    </>
+                                </Select.Option>
                             ))
-                          }                      
+                        }
                     </FormSelect>
                     <InputOutput>
                         <InputOutputColumn>
@@ -482,7 +480,7 @@ const Choices = ({output, index, logits, top_tokens, choose, probabilities, runO
         const displaySeq = word
         return (
             <ListItem key={`${idx}-${word}`}>
-                <ChoiceItem  
+                <ChoiceItem
                     onClick={() => choose(word)}>
                     <Probability>{prob}</Probability>
                     {' '}

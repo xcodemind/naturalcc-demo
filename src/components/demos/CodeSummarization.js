@@ -95,16 +95,16 @@ const taskModels = [
         modelId: "Seq2seq",
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
-    {
-        name: "Tree2Seq",
-        desc: <span>
-            This model is the baseline model described
-      in <a href="https://ai.nju.edu.cn/_upload/tpl/04/10/1040/template1040/publications/ijcai17-clone.pdf">Supervised Deep Features for Software Functional
-Clone Detection by Exploiting Lexical and Syntactical Information in Source
-Code.</a>.
-        </span>,
-        modelId: "Tree2Seq"
-    },
+//     {
+//         name: "Tree2Seq",
+//         desc: <span>
+//             This model is the baseline model described
+//       in <a href="https://ai.nju.edu.cn/_upload/tpl/04/10/1040/template1040/publications/ijcai17-clone.pdf">Supervised Deep Features for Software Functional
+// Clone Detection by Exploiting Lexical and Syntactical Information in Source
+// Code.</a>.
+//         </span>,
+//         modelId: "Tree2Seq"
+//     },
 ]
 
 const fields = [

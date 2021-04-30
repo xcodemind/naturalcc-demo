@@ -23,13 +23,8 @@ const description = (
 
 const taskModels = [
     {
-        name: "BiRNN",
-    //     desc: <span>
-    //   Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
-    //          employs self-attention for neural machine translation task .
-    //   </span>,
-        modelId: "BiRNN",
-        // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
+        name: "Conv1d",
+        modelId:"Conv1d"
     },
     {
         name: "NBOW",
@@ -42,8 +37,13 @@ const taskModels = [
         // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
     {
-        name: "Conv1d",
-        modelId:"Conv1d"
+        name: "BiRNN",
+    //     desc: <span>
+    //   Transformer, proposed in <a href="https://arxiv.org/abs/1603.01360">Attention Is All You Need</a>,
+    //          employs self-attention for neural machine translation task .
+    //   </span>,
+        modelId: "BiRNN",
+        // usage: buildUsage("fine-grained-ner.2020-06-24.tar.gz")
     },
     {
         name: "SelfAttn",
@@ -62,7 +62,7 @@ const fields = [
         name: 'utterance',
         label: 'Query',
         type: 'TEXT_AREA',
-        placeholder: `get_manifest should return an image manifest for a particular repo and tag.  The image details are extracted when the client is generated. `,
+        placeholder: "Copy assets to dmg",
     },
     {name: "model", label: "Model", type: "RADIO", options: taskModels, optional: true}
 ];
@@ -100,11 +100,11 @@ const PanelDesc = styled.div`
 const examples = [
     {
         order:1,
-        utterance: "get_manifest should return an image manifest for a particular repo and tag. The image details are extracted when the client is generated.",
+        utterance: "Copy assets to dmg",
     },
     {
         order:2,
-        utterance: `Add routes by an resource instance's methods.`,
+        utterance: "Checks transitive dependency licensing errors for the given software",
     },
 ];
 
